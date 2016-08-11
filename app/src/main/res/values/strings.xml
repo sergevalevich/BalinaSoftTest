@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BalinaSoftTest</string>
+    <string name="category_icon_desc">dish category icon</string>
 </resources>

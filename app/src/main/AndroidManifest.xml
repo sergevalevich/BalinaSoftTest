@@ -26,19 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.MealsActivity">
-        </activity>
-
-        <activity
-            android:name=".ui.activities.MealsActivity_"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.activities.MainActivity">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.valevich.balinasofttest.ui.activities.MainActivity"/>
-        </activity>
-
     </application>
 
 </manifest>

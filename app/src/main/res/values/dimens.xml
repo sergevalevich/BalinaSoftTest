@@ -8,4 +8,16 @@
     <dimen name="category_item_side_padding">16dp</dimen>
     <dimen name="category_icon_width">36dp</dimen>
     <dimen name="category_name_left_margin">20dp</dimen>
+
+    <!-- Card's margins, per the Android Design guidelines. -->
+    <dimen name="card_media_height">240dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_side_margin">4dp</dimen>
+    <dimen name="card_title_top_margin">24dp</dimen>
+    <dimen name="card_text_side_margin">16dp</dimen>
+    <dimen name="card_title_bottom_margin">16dp</dimen>
+    <dimen name="dish_name_textSize">24sp</dimen>
+    <dimen name="dish_secondary_textSize">14sp</dimen>
+    <dimen name="card_info_bottom_margin">16dp</dimen>
 </resources>

@@ -9,7 +9,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/meals_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/list_vertical_padding"
+        android:paddingBottom="@dimen/list_vertical_padding">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

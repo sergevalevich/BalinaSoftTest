@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.storage.data.MealsEntry;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
-import com.valevich.balinasofttest.ui.recyclerview.utils.ItemsFinder;
+import com.valevich.balinasofttest.ui.recyclerview.utils.MealsFinder;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView_;
 
@@ -26,12 +26,12 @@ public class MealsAdapter
     Context mContext;
 
     @Bean(MealsEntry.class)
-    ItemsFinder<MealsEntry> mMealsFinder;
+    MealsFinder mMealsFinder;
 
     private int mExpandedItemPosition = -1;
 
-    public void initAdapter() {
-        mItems = mMealsFinder.findAll();
+    public void initAdapter(int categoryId) {
+        mItems = mMealsFinder.findAllByCategory(categoryId);
     }
 
     @Override

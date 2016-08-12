@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_feature"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_categories"
+            android:title="@string/nav_drawer_categories"
+            android:icon="@drawable/ic_categories"
+            android:checked="true">
+        </item>
+
+        <item
+            android:id="@+id/drawer_contacts"
+            android:title="@string/nav_drawer_contacts"
+            android:icon="@drawable/ic_contacts">
+        </item>
+
+    </group>
+
+</menu>

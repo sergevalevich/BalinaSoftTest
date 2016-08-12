@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dishCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/card_side_margin"
+    android:layout_marginEnd="@dimen/card_side_margin"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardUseCompatPadding="true"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:contentDescription="@string/dish_picture_desc"
+            android:id="@+id/picture"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_media_height"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/card_text_side_margin"
+            android:layout_marginLeft="@dimen/card_text_side_margin"
+            android:layout_marginEnd="@dimen/card_text_side_margin"
+            android:layout_marginRight="@dimen/card_text_side_margin">
+
+            <LinearLayout
+                android:id="@+id/dish_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_title_top_margin"
+                    android:layout_marginBottom="@dimen/card_title_bottom_margin"
+                    android:maxLines="1"
+                    android:maxLength="25"
+                    android:textSize="@dimen/dish_name_textSize"
+                    tools:text = "Пицца"/>
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:maxLength="25"
+                    android:textSize="@dimen/dish_secondary_textSize"
+                    android:alpha=".7"
+                    tools:text = "100 г."/>
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/card_info_bottom_margin"
+                    android:maxLines="1"
+                    android:maxLength="25"
+                    android:textSize="@dimen/dish_secondary_textSize"
+                    android:alpha=".7"
+                    tools:text = "150 р."/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:contentDescription="@string/dropdown_arrow_desc"
+                android:id="@+id/arrow"
+                android:layout_width="@dimen/dropdown_arrow_size"
+                android:layout_height="@dimen/dropdown_arrow_size"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_arrow"/>
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/expandableView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

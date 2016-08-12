@@ -8,7 +8,6 @@ import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CategorySelectedEvent;
 import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
-import com.valevich.balinasofttest.ui.recyclerview.utils.CategoriesFinder;
 import com.valevich.balinasofttest.ui.recyclerview.views.CategoryItemView;
 import com.valevich.balinasofttest.ui.recyclerview.views.CategoryItemView_;
 
@@ -22,14 +21,11 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,Category
     @RootContext
     Context mContext;
 
-    @Bean(Category.class)
-    CategoriesFinder mCategoriesFinder;
-
     @Bean
     EventBus mEventBus;
 
     public void initAdapter() {
-        mItems = mCategoriesFinder.findAll();
+        mItems = Category.getAllCategories();
     }
 
     @Override
@@ -38,7 +34,7 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,Category
         Category category = mItems.get(position);
         view.bindData(category);
 
-        setItemClickNotification(view,category.getId());
+        setItemClickNotification(view,category);
     }
 
     @Override
@@ -46,16 +42,16 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,Category
         return CategoryItemView_.build(mContext);
     }
 
-    private void setItemClickNotification(CategoryItemView view, final int id){
+    private void setItemClickNotification(CategoryItemView view, final Category category){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notifyCategorySelected(id);
+                notifyCategorySelected(category);
             }
         });
     }
 
-    private void notifyCategorySelected(int id) {
-        mEventBus.post(new CategorySelectedEvent(id));
+    private void notifyCategorySelected(Category category) {
+        mEventBus.post(new CategorySelectedEvent(category));
     }
 }

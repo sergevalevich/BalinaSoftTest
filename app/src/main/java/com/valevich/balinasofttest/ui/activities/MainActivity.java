@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity
     public void onCategorySelected(CategorySelectedEvent event) {
         replaceFragment(MealsFragment_
                 .builder()
-                .categoryId(event.getCategoryId())
+                .mCategory(event.getCategory())
                 .build());
     }
 

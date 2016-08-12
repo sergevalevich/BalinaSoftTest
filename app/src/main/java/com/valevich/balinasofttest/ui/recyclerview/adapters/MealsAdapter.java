@@ -8,13 +8,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.valevich.balinasofttest.R;
+import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.storage.data.Meal;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
-import com.valevich.balinasofttest.ui.recyclerview.utils.MealsFinder;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView_;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -25,13 +24,10 @@ public class MealsAdapter
     @RootContext
     Context mContext;
 
-    @Bean(Meal.class)
-    MealsFinder mMealsFinder;
-
     private int mExpandedItemPosition = -1;
 
-    public void initAdapter(int categoryId) {
-        mItems = mMealsFinder.findAllByCategory(categoryId);
+    public void initAdapter(Category category) {
+        mItems = category.getMeals();
     }
 
     @Override

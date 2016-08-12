@@ -2,4 +2,29 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- List item margins, per the Android Design guidelines. -->
+    <dimen name="category_item_height">56dp</dimen>
+    <dimen name="category_item_side_padding">16dp</dimen>
+    <dimen name="category_icon_width">48dp</dimen>
+    <dimen name="category_name_left_margin">8dp</dimen>
+
+    <!-- Card's margins, per the Android Design guidelines. -->
+    <dimen name="card_media_height">240dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_side_margin">4dp</dimen>
+    <dimen name="card_title_top_margin">24dp</dimen>
+    <dimen name="card_text_side_margin">16dp</dimen>
+    <dimen name="card_title_bottom_margin">16dp</dimen>
+    <dimen name="dish_name_textSize">24sp</dimen>
+    <dimen name="dish_secondary_textSize">14sp</dimen>
+    <dimen name="card_info_bottom_margin">16dp</dimen>
+    <dimen name="list_vertical_padding">3dp</dimen>
+    <dimen name="dropdown_arrow_size">36dp</dimen>
+
+    <!-- Navigation Drawer margins, per the Android Design guidelines. -->
+    <dimen name="drawer_header_layout_height">172dp</dimen>
+    <dimen name="drawer_status_bar_height">25dp</dimen>
+
 </resources>

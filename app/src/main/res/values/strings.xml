@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BalinaSoftTest</string>
+    <string name="navigation_drawer_open" translatable="false">Open Navigation</string>
+    <string name="navigation_drawer_close" translatable="false">Close Navigation</string>
+    <string name="category_icon_desc">dish category icon</string>
+    <string name="dish_picture_desc">dish picture</string>
+    <string name="dropdown_arrow_desc">dropdown arrow</string>
+    <string name="nav_drawer_categories">Каталог</string>
+    <string name="nav_drawer_contacts">Контакты</string>
+    <string name="meals">Блюда</string>
 </resources>

@@ -2,20 +2,19 @@ package com.valevich.balinasofttest.ui.recyclerview.views;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.valevich.balinasofttest.R;
-import com.valevich.balinasofttest.storage.data.MealsEntry;
+import com.valevich.balinasofttest.storage.data.Meal;
 import com.valevich.balinasofttest.ui.recyclerview.utils.ViewBinder;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 @EViewGroup(R.layout.meals_list_item)
-public class MealsItemView extends CardView implements ViewBinder<MealsEntry> {
+public class MealsItemView extends CardView implements ViewBinder<Meal> {
 
     @ViewById(R.id.picture)
     ImageView mPicture;
@@ -43,7 +42,7 @@ public class MealsItemView extends CardView implements ViewBinder<MealsEntry> {
     }
 
     @Override
-    public void bindData(MealsEntry item) {
+    public void bindData(Meal item) {
 
     }
 

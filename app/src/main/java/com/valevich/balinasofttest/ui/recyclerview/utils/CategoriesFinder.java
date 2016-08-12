@@ -1,9 +1,9 @@
 package com.valevich.balinasofttest.ui.recyclerview.utils;
 
-import com.valevich.balinasofttest.storage.data.CategoryEntry;
+import com.valevich.balinasofttest.storage.data.Category;
 
 import java.util.List;
 
 public interface CategoriesFinder {
-    List<CategoryEntry> findAll();
+    List<Category> findAll();
 }

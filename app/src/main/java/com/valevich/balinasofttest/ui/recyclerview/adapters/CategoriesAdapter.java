@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CategorySelectedEvent;
-import com.valevich.balinasofttest.storage.data.CategoryEntry;
+import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
 import com.valevich.balinasofttest.ui.recyclerview.utils.CategoriesFinder;
 import com.valevich.balinasofttest.ui.recyclerview.views.CategoryItemView;
@@ -17,12 +17,12 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 @EBean
-public class CategoriesAdapter extends RecyclerViewAdapterBase<CategoryEntry,CategoryItemView> {
+public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,CategoryItemView> {
 
     @RootContext
     Context mContext;
 
-    @Bean(CategoryEntry.class)
+    @Bean(Category.class)
     CategoriesFinder mCategoriesFinder;
 
     @Bean
@@ -35,7 +35,7 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<CategoryEntry,Cat
     @Override
     public void onBindViewHolder(ViewWrapper<CategoryItemView> holder, int position) {
         CategoryItemView view = holder.getView();
-        CategoryEntry category = mItems.get(position);
+        Category category = mItems.get(position);
         view.bindData(category);
 
         setItemClickNotification(view,category.getId());

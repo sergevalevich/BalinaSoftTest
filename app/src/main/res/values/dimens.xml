@@ -6,8 +6,8 @@
     <!-- List item margins, per the Android Design guidelines. -->
     <dimen name="category_item_height">56dp</dimen>
     <dimen name="category_item_side_padding">16dp</dimen>
-    <dimen name="category_icon_width">36dp</dimen>
-    <dimen name="category_name_left_margin">20dp</dimen>
+    <dimen name="category_icon_width">48dp</dimen>
+    <dimen name="category_name_left_margin">8dp</dimen>
 
     <!-- Card's margins, per the Android Design guidelines. -->
     <dimen name="card_media_height">240dp</dimen>

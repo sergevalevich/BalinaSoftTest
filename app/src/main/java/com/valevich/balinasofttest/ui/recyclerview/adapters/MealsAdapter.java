@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.valevich.balinasofttest.R;
-import com.valevich.balinasofttest.storage.data.MealsEntry;
+import com.valevich.balinasofttest.storage.data.Meal;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
 import com.valevich.balinasofttest.ui.recyclerview.utils.MealsFinder;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView;
@@ -20,12 +20,12 @@ import org.androidannotations.annotations.RootContext;
 
 @EBean
 public class MealsAdapter
-        extends RecyclerViewAdapterBase<MealsEntry,MealsItemView> {
+        extends RecyclerViewAdapterBase<Meal,MealsItemView> {
 
     @RootContext
     Context mContext;
 
-    @Bean(MealsEntry.class)
+    @Bean(Meal.class)
     MealsFinder mMealsFinder;
 
     private int mExpandedItemPosition = -1;
@@ -38,7 +38,7 @@ public class MealsAdapter
     public void onBindViewHolder(ViewWrapper<MealsItemView> holder, int position) {
 
         MealsItemView itemView = holder.getView();
-        MealsEntry meal = mItems.get(position);
+        Meal meal = mItems.get(position);
         itemView.bindData(meal);
 
         setUpExpandableArea(itemView,position);

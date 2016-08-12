@@ -1,38 +1,69 @@
 package com.valevich.balinasofttest.storage.data;
 
-import com.valevich.balinasofttest.ui.recyclerview.utils.CategoriesFinder;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.valevich.balinasofttest.storage.BalinaSoftTestDatabase;
 import com.valevich.balinasofttest.utils.StubConstants;
 
 import org.androidannotations.annotations.EBean;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 @EBean
-public class Category implements CategoriesFinder {
+@ModelContainer
+@Table(database = BalinaSoftTestDatabase.class)
+public class Category extends BaseModel implements Serializable{
 
-    private int mId;
+    @PrimaryKey(autoincrement = true)
+    private int id;
 
-    private String mName;
+    @Column
+    private String name;
 
-    @Override
-    public List<Category> findAll() {
-        ArrayList<Category> categories = new ArrayList<>();
-        for(int i = 0; i<10; i++) {
-            Category category = new Category();
-            categories.add(category);
-        }
-        return categories;
-    }
+    List<Meal> meals;
 
     public int getId() {
-        return mId;
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "meals")
+    public List<Meal> getMeals() {
+        if (meals == null || meals.isEmpty()) {
+            meals = SQLite.select()
+                    .from(Meal.class)
+                    .where(Meal_Table.category_id.eq(id))
+                    .queryList();
+        }
+        return meals;
+    }
+
+    public static List<Category> getAllCategories() {
+        return SQLite.select()
+                .from(Category.class)
+                .queryList();
+    }
 
     //giving stub static icons
     public int getIconResourceId() {
-        switch (mName) {
+        switch (name) {
             case StubConstants.STUB_CATEGORY_PIZZA:
                 return StubConstants.STUB_CATEGORY_PIZZA_ICON;
             case StubConstants.STUB_CATEGORY_BARBECUE:

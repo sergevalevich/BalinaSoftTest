@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.valevich.balinasofttest.R;
+import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.MealsAdapter;
 import com.valevich.balinasofttest.utils.ConstantsManager;
 
@@ -25,7 +26,7 @@ public class MealsFragment extends Fragment {
     RecyclerView mMealsRecyclerView;
 
     @FragmentArg
-    int categoryId;
+    Category mCategory;
 
     @AfterViews
     void setupViews() {
@@ -38,14 +39,14 @@ public class MealsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadMeals(categoryId);
+        loadMeals();
     }
 
     private void setupRecyclerView() {
         mMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void loadMeals(final int categoryId) {
+    private void loadMeals() {
 
         getLoaderManager().restartLoader(ConstantsManager.MEALS_LOADER_ID,
                 null,
@@ -55,7 +56,7 @@ public class MealsFragment extends Fragment {
                         final AsyncTaskLoader loader = new AsyncTaskLoader(getActivity()) {
                             @Override
                             public Object loadInBackground() {
-                                mMealsAdapter.initAdapter(categoryId);
+                                mMealsAdapter.initAdapter(mCategory);
                                 return null;
                             }
                         };

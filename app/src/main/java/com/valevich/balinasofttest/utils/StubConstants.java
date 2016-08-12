@@ -35,5 +35,5 @@ public interface StubConstants {
     int STUB_CATEGORY_DESSERTS_ICON = R.drawable.deserts;
     int STUB_CATEGORY_DRINKS_ICON = R.drawable.drinks;
     int STUB_CATEGORY_PIZZA_ICON = R.drawable.pizza;
-    int CATEGORY_PLACEHOLDER_ICON = R.drawable.category_placeholder;
+    int CATEGORY_PLACEHOLDER_ICON = R.drawable.image_placeholder;
 }

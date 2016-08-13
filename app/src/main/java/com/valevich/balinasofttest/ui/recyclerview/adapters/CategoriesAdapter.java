@@ -25,7 +25,7 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,Category
     EventBus mEventBus;
 
     public void initAdapter() {
-        mItems = Category.getAllCategories();
+        mItems = Category.getAll();
     }
 
     @Override
@@ -46,12 +46,12 @@ public class CategoriesAdapter extends RecyclerViewAdapterBase<Category,Category
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notifyCategorySelected(category);
+                notifyCategorySelected(category.getName());
             }
         });
     }
 
-    private void notifyCategorySelected(Category category) {
-        mEventBus.post(new CategorySelectedEvent(category));
+    private void notifyCategorySelected(String categoryName) {
+        mEventBus.post(new CategorySelectedEvent(categoryName));
     }
 }

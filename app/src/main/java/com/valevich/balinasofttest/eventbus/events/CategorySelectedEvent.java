@@ -1,17 +1,15 @@
 package com.valevich.balinasofttest.eventbus.events;
 
-import com.valevich.balinasofttest.storage.data.Category;
-
 public class CategorySelectedEvent {
 
-    private Category mCategory;
+    private String mCategoryName;
 
-    public CategorySelectedEvent(Category category) {
-        mCategory = category;
+    public CategorySelectedEvent(String categoryName) {
+        mCategoryName = categoryName;
     }
 
-    public Category getCategory() {
-        return mCategory;
+    public String getCategoryName() {
+        return mCategoryName;
     }
 
 }

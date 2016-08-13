@@ -12,7 +12,6 @@ import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
-import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.MealsAdapter;
 import com.valevich.balinasofttest.utils.ConstantsManager;
 
@@ -29,7 +28,7 @@ public class MealsFragment extends Fragment {
     RecyclerView mMealsRecyclerView;
 
     @FragmentArg
-    Category mCategory;
+    String mCategoryName;
 
     @AfterViews
     void setupViews() {
@@ -79,7 +78,7 @@ public class MealsFragment extends Fragment {
                         final AsyncTaskLoader loader = new AsyncTaskLoader(getActivity()) {
                             @Override
                             public Object loadInBackground() {
-                                mMealsAdapter.initAdapter(mCategory);
+                                mMealsAdapter.initAdapter(mCategoryName);
                                 return null;
                             }
                         };

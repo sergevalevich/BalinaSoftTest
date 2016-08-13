@@ -1,9 +1,7 @@
 package com.valevich.balinasofttest.services;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.valevich.balinasofttest.R;
@@ -22,7 +20,8 @@ import com.valevich.balinasofttest.utils.NetworkStateChecker;
 import com.valevich.balinasofttest.utils.TriesCounter;
 
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EService;
+import org.androidannotations.annotations.EIntentService;
+import org.androidannotations.annotations.ServiceAction;
 import org.androidannotations.annotations.res.StringRes;
 
 import java.util.ArrayList;
@@ -32,8 +31,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-@EService
-public class CatalogLoadingService extends Service implements
+@EIntentService
+public class CatalogLoadingService extends IntentService implements
         Callback<FetchedCatalogModel>,
         Transaction.Success,
         Transaction.Error {
@@ -53,18 +52,13 @@ public class CatalogLoadingService extends Service implements
     @StringRes(R.string.network_unavailable_message)
     String mNetworkUnavailableMessage;
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        fetchCatalog();
-
-        return START_STICKY;
+    public CatalogLoadingService() {
+        super(CatalogLoadingService.class.getSimpleName());
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    @ServiceAction
+    void fetch() {
+        fetchCatalog();
     }
 
     // network callbacks
@@ -79,7 +73,6 @@ public class CatalogLoadingService extends Service implements
         if (mTriesCounter.areTriesLeft()) fetchCatalog();
         else {
             notifyAboutError(error.getLocalizedMessage());
-            stopSelf();
         }
     }
 
@@ -87,13 +80,11 @@ public class CatalogLoadingService extends Service implements
     @Override
     public void onSuccess(Transaction transaction) {
         notifyCatalogSaved();
-        stopSelf();
     }
 
     @Override
     public void onError(Transaction transaction, Throwable error) {
         notifyAboutError(error.getLocalizedMessage());
-        stopSelf();
     }
 
     private void fetchCatalog() {
@@ -101,7 +92,6 @@ public class CatalogLoadingService extends Service implements
             mRestService.fetchCatalog(ConstantsManager.API_KEY, this);
         else {
             notifyAboutError(mNetworkUnavailableMessage);
-            stopSelf();
         }
     }
 
@@ -136,7 +126,7 @@ public class CatalogLoadingService extends Service implements
                                       List<CategoryApiModel> fetchedCategories) {
 
         List<Meal> mealsToSave = new ArrayList<>();
-        List<Category> savedCategories = Category.getAllCategories();
+        List<Category> savedCategories = Category.getAll();
 
         for (int i = 0; i < savedCategories.size(); i++) {
             Category savedCategory = savedCategories.get(i);
@@ -186,4 +176,8 @@ public class CatalogLoadingService extends Service implements
         mEventBus.post(new ErrorEvent(message));
     }
 
+    @Override
+    protected void onHandleIntent(Intent intent) {
+
+    }
 }

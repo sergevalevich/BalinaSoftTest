@@ -2,6 +2,10 @@ package com.valevich.balinasofttest.utils;
 
 import com.valevich.balinasofttest.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 //--stubs for static data
 //--zaglushki dlya staticheskih dannyh
 //--заглушки
@@ -21,6 +25,7 @@ public interface StubConstants {
     String STUB_CATEGORY_DRINKS = "Напитки";
     String STUB_CATEGORY_PIZZA = "Пицца";
 
+    //dummy icons
     int STUB_CATEGORY_BARBECUE_ICON = R.drawable.barbecue;
     int STUB_CATEGORY_CONSTRUCTOR_ICON = R.drawable.constructor;
     int STUB_CATEGORY_NOODLES_ICON = R.drawable.noodles;
@@ -36,4 +41,14 @@ public interface StubConstants {
     int STUB_CATEGORY_DRINKS_ICON = R.drawable.drinks;
     int STUB_CATEGORY_PIZZA_ICON = R.drawable.pizza;
     int CATEGORY_PLACEHOLDER_ICON = R.drawable.image_placeholder;
+
+    //dummy location
+    List<Double> STUB_LATITUDES = new ArrayList<>(Arrays.asList(53.85,53.900333,53.900333,53.877068));
+    List<Double> STUB_LONGITUDES = new ArrayList<>(Arrays.asList(27.47,27.47,27.461083,27.620239));
+    List<String> STUB_ADDRESSES = new ArrayList<>(Arrays.asList(
+            "Минск, Дзержинского 122",
+            "Минск, Одинцова 4",
+            "Минск, Победителей 20/2",
+            "Минск, Партизанский проспект 71"));
+
 }

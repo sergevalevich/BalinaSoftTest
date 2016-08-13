@@ -23,6 +23,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/category_name_left_margin"
         android:layout_marginStart="@dimen/category_name_left_margin"
+        android:textSize="@dimen/category_textSize"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:maxLength="40"/>

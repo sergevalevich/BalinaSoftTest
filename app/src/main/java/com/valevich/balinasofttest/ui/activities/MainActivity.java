@@ -1,6 +1,5 @@
 package com.valevich.balinasofttest.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, CatalogLoadingService_.class));
+        startCatalogLoadingService();
 
         if (savedInstanceState == null) {
             replaceFragment(new CategoriesFragment_());
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity
     public void onCategorySelected(CategorySelectedEvent event) {
         replaceFragment(MealsFragment_
                 .builder()
-                .mCategory(event.getCategory())
+                .mCategoryName(event.getCategoryName())
                 .build());
     }
 
@@ -206,6 +205,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         }
+    }
+
+    private void startCatalogLoadingService() {
+        CatalogLoadingService_.intent(getApplication())
+                .start();
     }
 
     private void notifyUser(String message) {

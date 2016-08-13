@@ -1,7 +1,9 @@
 package com.valevich.balinasofttest.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,8 @@ import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CategorySelectedEvent;
+import com.valevich.balinasofttest.eventbus.events.ErrorEvent;
+import com.valevich.balinasofttest.services.CatalogLoadingService_;
 import com.valevich.balinasofttest.ui.fragments.CategoriesFragment_;
 import com.valevich.balinasofttest.ui.fragments.ContactsFragment_;
 import com.valevich.balinasofttest.ui.fragments.MealsFragment_;
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startService(new Intent(this, CatalogLoadingService_.class));
+
         if (savedInstanceState == null) {
             replaceFragment(new CategoriesFragment_());
         }
@@ -87,6 +93,11 @@ public class MainActivity extends AppCompatActivity
                 .builder()
                 .mCategory(event.getCategory())
                 .build());
+    }
+
+    @Subscribe
+    public void onError(ErrorEvent event) {
+        notifyUser(event.getMessage());
     }
 
     @AfterViews
@@ -195,6 +206,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         }
+    }
+
+    private void notifyUser(String message) {
+        Snackbar.make(mDrawerLayout, message, Snackbar.LENGTH_LONG)
+                .show();
     }
 
 }

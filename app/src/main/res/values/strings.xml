@@ -8,4 +8,10 @@
     <string name="nav_drawer_categories">Каталог</string>
     <string name="nav_drawer_contacts">Контакты</string>
     <string name="meals">Блюда</string>
+    <string name="error_network">Проблемы с сетью</string>
+    <string name="error_no_response">Нет ответа</string>
+    <string name="error_network_http">Ошибка </string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="network_unavailable_message">Сеть недоступна</string>
+    <string name="info_unavailable_message">Информация недоступна</string>
 </resources>

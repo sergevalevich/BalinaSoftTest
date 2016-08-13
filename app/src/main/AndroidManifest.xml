@@ -26,6 +26,9 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".services.CatalogLoadingService_">
+        </service>
+
     </application>
 
 </manifest>

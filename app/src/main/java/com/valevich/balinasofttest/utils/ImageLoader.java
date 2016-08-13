@@ -24,6 +24,7 @@ public class ImageLoader {
         Glide.with(mContext)
                 .load(resId)
                 .asBitmap()
+                .thumbnail(0.1f)
                 .centerCrop()
                 .placeholder(R.drawable.image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -41,6 +42,7 @@ public class ImageLoader {
     public void loadImageByUrl(String imageUrl, ImageView imageView) {
         Glide.with(mContext)
                 .load(imageUrl)
+                .thumbnail(0.1f)
                 .centerCrop()
                 .placeholder(R.drawable.image_placeholder_wide)
                 .crossFade()

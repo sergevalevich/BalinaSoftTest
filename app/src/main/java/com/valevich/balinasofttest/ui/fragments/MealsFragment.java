@@ -8,7 +8,10 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
+import com.valevich.balinasofttest.eventbus.EventBus;
+import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.MealsAdapter;
 import com.valevich.balinasofttest.utils.ConstantsManager;
@@ -36,9 +39,29 @@ public class MealsFragment extends Fragment {
     @Bean
     MealsAdapter mMealsAdapter;
 
+    @Bean
+    EventBus mEventBus;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mEventBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mEventBus.unregister(this);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        loadMeals();
+    }
+
+    @Subscribe
+    public void onCatalogSaved(CatalogSavedEvent event) {
         loadMeals();
     }
 

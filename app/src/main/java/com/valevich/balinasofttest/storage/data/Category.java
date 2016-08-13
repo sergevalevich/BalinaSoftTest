@@ -1,13 +1,18 @@
 package com.valevich.balinasofttest.storage.data;
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.Unique;
+import com.raizlabs.android.dbflow.annotation.UniqueGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.valevich.balinasofttest.storage.BalinaSoftTestDatabase;
+import com.valevich.balinasofttest.storage.TransactionExecutor;
 import com.valevich.balinasofttest.utils.StubConstants;
 
 import org.androidannotations.annotations.EBean;
@@ -17,16 +22,21 @@ import java.util.List;
 
 @EBean
 @ModelContainer
-@Table(database = BalinaSoftTestDatabase.class)
+@Table(database = BalinaSoftTestDatabase.class,
+        uniqueColumnGroups = {@UniqueGroup(groupNumber = 1, uniqueConflict = ConflictAction.REPLACE)})
 public class Category extends BaseModel implements Serializable{
 
     @PrimaryKey(autoincrement = true)
     private int id;
 
     @Column
+    @Unique(unique = false, uniqueGroups = 1)
     private String name;
 
     List<Meal> meals;
+
+    private static final TransactionExecutor<Category> mTransactionExecutor
+            = new TransactionExecutor<>();
 
     public int getId() {
         return id;
@@ -59,6 +69,12 @@ public class Category extends BaseModel implements Serializable{
         return SQLite.select()
                 .from(Category.class)
                 .queryList();
+    }
+
+    public static void create(List<Category> categoriesToProcess,
+                              Transaction.Success successCallback,
+                              Transaction.Error errorCallback) {
+        mTransactionExecutor.create(categoriesToProcess, successCallback, errorCallback);
     }
 
     //giving stub static icons

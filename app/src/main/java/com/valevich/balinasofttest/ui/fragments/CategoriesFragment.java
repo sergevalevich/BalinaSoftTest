@@ -8,7 +8,10 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
+import com.valevich.balinasofttest.eventbus.EventBus;
+import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.CategoriesAdapter;
 import com.valevich.balinasofttest.utils.ConstantsManager;
 
@@ -26,9 +29,29 @@ public class CategoriesFragment extends Fragment {
     @Bean
     CategoriesAdapter mCategoriesAdapter;
 
+    @Bean
+    EventBus mEventBus;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mEventBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mEventBus.unregister(this);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        loadCategories();
+    }
+
+    @Subscribe
+    public void onCatalogSaved(CatalogSavedEvent event) {
         loadCategories();
     }
 

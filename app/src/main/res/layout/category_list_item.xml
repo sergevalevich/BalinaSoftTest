@@ -14,8 +14,8 @@
     <ImageView
         android:contentDescription="@string/category_icon_desc"
         android:id="@+id/icon"
-        android:layout_width="@dimen/category_icon_width"
-        android:layout_height="match_parent"/>
+        android:layout_width="@dimen/category_icon_size"
+        android:layout_height="@dimen/category_icon_size"/>
 
     <TextView
         android:id="@+id/name"

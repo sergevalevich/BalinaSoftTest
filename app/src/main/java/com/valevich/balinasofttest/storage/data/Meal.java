@@ -28,15 +28,19 @@ public class Meal extends BaseModel {
     private int id;
 
     @Column
+    @Unique(unique = false, uniqueGroups = 2)
     private String name;
 
     @Column
+    @Unique(unique = false, uniqueGroups = 2)
     private String price;
 
     @Column
+    @Unique(unique = false, uniqueGroups = 2)
     private String description;
 
     @Column
+    @Unique(unique = false, uniqueGroups = 2)
     private String weight;
 
     @Column

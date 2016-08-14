@@ -24,7 +24,7 @@ import java.util.List;
 @ModelContainer
 @Table(database = BalinaSoftTestDatabase.class,
         uniqueColumnGroups = {@UniqueGroup(groupNumber = 1, uniqueConflict = ConflictAction.REPLACE)})
-public class Category extends BaseModel implements Serializable{
+public class Category extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
     private int id;
@@ -65,10 +65,17 @@ public class Category extends BaseModel implements Serializable{
         return meals;
     }
 
-    public static List<Category> getAllCategories() {
+    public static List<Category> getAll() {
         return SQLite.select()
                 .from(Category.class)
                 .queryList();
+    }
+
+    public static Category get(String name) {
+        return SQLite.select()
+                .from(Category.class)
+                .where(Category_Table.name.eq(name))
+                .querySingle();
     }
 
     public static void create(List<Category> categoriesToProcess,

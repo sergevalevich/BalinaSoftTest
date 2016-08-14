@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/two_line_item_height"
+              android:paddingEnd="@dimen/list_item_side_padding"
+              android:paddingStart="@dimen/list_item_side_padding">
+
+    <ImageView
+        android:contentDescription="@string/contact_icon_desc"
+        android:id="@+id/icon"
+        android:layout_width="@dimen/contact_icon_size"
+        android:layout_height="@dimen/contact_icon_size"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_contact"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/category_name_left_margin"
+        android:layout_marginStart="@dimen/category_name_left_margin"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="@dimen/primary_textSize"/>
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:alpha=".7"
+            android:textSize="@dimen/secondary_textSize"
+            android:text = "Минск, Партизанский проспект 71"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

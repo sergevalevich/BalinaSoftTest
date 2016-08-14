@@ -26,8 +26,9 @@ public class MealsAdapter
 
     private int mExpandedItemPosition = -1;
 
-    public void initAdapter(Category category) {
-        mItems = category.getMeals();
+    public void initAdapter(String categoryName) {
+        Category category = Category.get(categoryName);
+        if(category != null) mItems = category.getMeals();
     }
 
     @Override

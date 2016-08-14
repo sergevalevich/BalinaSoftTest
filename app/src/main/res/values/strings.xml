@@ -14,4 +14,5 @@
     <string name="error_unknown">Неизвестная ошибка</string>
     <string name="network_unavailable_message">Сеть недоступна</string>
     <string name="info_unavailable_message">Информация недоступна</string>
+    <string name="contact_icon_desc">contact icon</string>
 </resources>

@@ -18,14 +18,21 @@
     <dimen name="card_text_side_margin">16dp</dimen>
     <dimen name="card_title_bottom_margin">16dp</dimen>
     <dimen name="dish_name_textSize">24sp</dimen>
-    <dimen name="dish_secondary_textSize">14sp</dimen>
-    <dimen name="category_textSize">16sp</dimen>
+    <dimen name="secondary_textSize">14sp</dimen>
+    <dimen name="primary_textSize">16sp</dimen>
     <dimen name="card_info_bottom_margin">16dp</dimen>
     <dimen name="list_vertical_padding">3dp</dimen>
     <dimen name="dropdown_arrow_size">36dp</dimen>
+    <dimen name="two_line_item_height">72dp</dimen>
+    <dimen name="list_item_side_padding">16dp</dimen>
+    <dimen name="contact_icon_size">48dp</dimen>
 
     <!-- Navigation Drawer margins, per the Android Design guidelines. -->
     <dimen name="drawer_header_layout_height">172dp</dimen>
     <dimen name="drawer_status_bar_height">25dp</dimen>
+
+
+    <dimen name="map_height">240dp</dimen>
+    <dimen name="map_height_land">180dp</dimen>
 
 </resources>

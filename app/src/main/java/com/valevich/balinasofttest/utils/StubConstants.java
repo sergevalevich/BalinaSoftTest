@@ -2,9 +2,11 @@ package com.valevich.balinasofttest.utils;
 
 import com.valevich.balinasofttest.R;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 //--stubs for static data
 //--zaglushki dlya staticheskih dannyh
@@ -50,5 +52,20 @@ public interface StubConstants {
             "Минск, Одинцова 4",
             "Минск, Победителей 20/2",
             "Минск, Партизанский проспект 71"));
+
+    //dummy phone numbers
+    List<String> STUB_PHONE_NUMBERS = new ArrayList<>(Arrays.asList(
+            "+375 29 659 93 45",
+            "+375 29 742 54 78",
+            "+375 44 666 03 45",
+            "+375 44 335 88 22"));
+
+    List<Map.Entry<String,String>> ADDRESS_BY_NUMBER = new ArrayList<Map.Entry<String, String>>(Arrays.asList(
+            new AbstractMap.SimpleEntry<>(STUB_ADDRESSES.get(0),STUB_PHONE_NUMBERS.get(0)),
+            new AbstractMap.SimpleEntry<>(STUB_ADDRESSES.get(1),STUB_PHONE_NUMBERS.get(1)),
+            new AbstractMap.SimpleEntry<>(STUB_ADDRESSES.get(2),STUB_PHONE_NUMBERS.get(2)),
+            new AbstractMap.SimpleEntry<>(STUB_ADDRESSES.get(3),STUB_PHONE_NUMBERS.get(3))));
+
+    String CONTACT_INFO_FORMAT = "%s %n %s";
 
 }

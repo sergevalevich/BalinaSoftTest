@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:maxLength="25"
-                    android:textSize="@dimen/dish_secondary_textSize"
+                    android:textSize="@dimen/secondary_textSize"
                     android:alpha=".7"
                     tools:text = "100 г."/>
 
@@ -67,7 +67,7 @@
                     android:layout_marginBottom="@dimen/card_info_bottom_margin"
                     android:maxLines="1"
                     android:maxLength="25"
-                    android:textSize="@dimen/dish_secondary_textSize"
+                    android:textSize="@dimen/secondary_textSize"
                     android:alpha=".7"
                     tools:text = "150 р."/>
 

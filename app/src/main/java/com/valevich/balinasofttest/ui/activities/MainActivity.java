@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity
 
     private void startCatalogLoadingService() {
         CatalogLoadingService_.intent(getApplication())
+                .fetch()
                 .start();
     }
 

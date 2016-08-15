@@ -23,7 +23,7 @@ import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.eventbus.events.CategorySelectedEvent;
 import com.valevich.balinasofttest.eventbus.events.ErrorEvent;
 import com.valevich.balinasofttest.eventbus.events.FetchStartedEvent;
-import com.valevich.balinasofttest.services.CatalogLoadingService_;
+import com.valevich.balinasofttest.network.sync.SyncAdapter;
 import com.valevich.balinasofttest.ui.fragments.CategoriesFragment_;
 import com.valevich.balinasofttest.ui.fragments.ContactsFragment_;
 import com.valevich.balinasofttest.ui.fragments.MealsFragment_;
@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity
     @Bean
     EventBus mEventBus;
 
+    @Bean
+    SyncAdapter mSyncAdapter;
+
     private FragmentManager mFragmentManager;
 
     @Override
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startCatalogLoadingService();
+        mSyncAdapter.initializeSyncAdapter(this);
 
         if (savedInstanceState == null) {
             replaceFragment(new CategoriesFragment_());
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                startCatalogLoadingService();
+                mSyncAdapter.syncImmediately();
             }
         });
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
@@ -248,12 +251,6 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         }
-    }
-
-    private void startCatalogLoadingService() {
-        CatalogLoadingService_.intent(getApplication())
-                .fetch()
-                .start();
     }
 
     private void notifyUser(String message) {

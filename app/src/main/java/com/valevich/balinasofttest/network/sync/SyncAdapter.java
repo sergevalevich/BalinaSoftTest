@@ -1,7 +1,16 @@
-package com.valevich.balinasofttest.services;
+package com.valevich.balinasofttest.network.sync;
 
-import android.app.IntentService;
-import android.content.Intent;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.SyncRequest;
+import android.content.SyncResult;
+import android.os.Build;
+import android.os.Bundle;
 
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.valevich.balinasofttest.R;
@@ -20,8 +29,7 @@ import com.valevich.balinasofttest.utils.NetworkStateChecker;
 import com.valevich.balinasofttest.utils.TriesCounter;
 
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EIntentService;
-import org.androidannotations.annotations.ServiceAction;
+import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.res.StringRes;
 
 import java.util.ArrayList;
@@ -31,23 +39,16 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-@EIntentService
-public class CatalogLoadingService extends IntentService implements
+
+@EBean(scope = EBean.Scope.Singleton)
+public class SyncAdapter extends AbstractThreadedSyncAdapter implements
         Callback<FetchedCatalogModel>,
         Transaction.Success,
         Transaction.Error {
 
-    @Bean
-    RestService mRestService;
+    private static Account mAccount;
 
-    @Bean
-    EventBus mEventBus;
-
-    @Bean
-    TriesCounter mTriesCounter;
-
-    @Bean
-    NetworkStateChecker mNetworkStateChecker;
+    private static final int DEFAULT_SYNC_INTERVAL = 3600;//hour
 
     @StringRes(R.string.api_key)
     String mApiKey;
@@ -58,13 +59,48 @@ public class CatalogLoadingService extends IntentService implements
     @StringRes(R.string.weight_param_name)
     String mWeightParamName;
 
-    public CatalogLoadingService() {
-        super(CatalogLoadingService.class.getSimpleName());
+    @StringRes(R.string.content_authority)
+    String mContentAuthority;
+
+    @StringRes(R.string.sync_account_type)
+    String mSyncAccountType;
+
+    @Bean
+    NetworkStateChecker mNetworkStateChecker;
+
+    @Bean
+    RestService mRestService;
+
+    @Bean
+    EventBus mEventBus;
+
+    @Bean
+    TriesCounter mTriesCounter;
+
+
+    public SyncAdapter(Context context) {
+        super(context, true);
     }
 
-    @ServiceAction
-    void fetch() {
+    public void syncImmediately() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED,
+                true);
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,
+                true);
+        ContentResolver.requestSync(mAccount,
+                mContentAuthority, bundle);
+    }
+
+    public void initializeSyncAdapter(Context context) {
+        createAccount(context);
+    }
+
+    @Override
+    public void onPerformSync(Account account, Bundle extras, String authority,
+                              ContentProviderClient provider, SyncResult syncResult) {
         fetchCatalog();
+
     }
 
     // network callbacks
@@ -114,10 +150,10 @@ public class CatalogLoadingService extends IntentService implements
                 //saving meals only after saving categories,
                 //because we can associate meals only with the already saved categories
                 Meal.create(getMealsToSave(fetchedMeals,fetchedCategories),
-                        CatalogLoadingService.this,
-                        CatalogLoadingService.this);
+                        SyncAdapter.this,
+                        SyncAdapter.this);
             }
-        }, CatalogLoadingService.this);
+        }, SyncAdapter.this);
     }
 
     private List<Category> getCategoriesToSave(List<CategoryApiModel> fetchedCategories) {
@@ -187,8 +223,46 @@ public class CatalogLoadingService extends IntentService implements
         mEventBus.post(new FetchStartedEvent());
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
+    private void createAccount(Context context) {
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+        mAccount = new Account(context.getString(R.string.app_name),
+                mSyncAccountType);
+        ContentResolver.setIsSyncable(mAccount, mContentAuthority, 1);
+        if (null == accountManager.getPassword(mAccount)) {
+            if (!accountManager.addAccountExplicitly(mAccount, "", null)) {
+                mAccount = null;
+            }
+            onAccountCreated();
+        }
+    }
 
+    private void onAccountCreated() {
+        configureSync();
+        syncImmediately();
+    }
+
+    public void configureSync() {
+
+        final int SYNC_INTERVAL = DEFAULT_SYNC_INTERVAL;
+        final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // we can enable inexact timers in our periodic sync
+            SyncRequest request = new SyncRequest.Builder().
+                    syncPeriodic(SYNC_INTERVAL, SYNC_FLEXTIME).
+                    setSyncAdapter(mAccount, mContentAuthority).
+                    setExtras(new Bundle()).build();
+            ContentResolver.requestSync(request);
+        } else {
+            ContentResolver.addPeriodicSync(mAccount,
+                    mContentAuthority, new Bundle(), SYNC_INTERVAL);
+        }
+
+        ContentResolver.setSyncAutomatically(mAccount,
+                mContentAuthority, true);
+        ContentResolver.addPeriodicSync(mAccount, mContentAuthority,
+                Bundle.EMPTY,
+                SYNC_INTERVAL);
     }
 }

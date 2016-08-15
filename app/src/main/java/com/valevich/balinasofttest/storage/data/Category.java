@@ -17,7 +17,6 @@ import com.valevich.balinasofttest.utils.StubConstants;
 
 import org.androidannotations.annotations.EBean;
 
-import java.io.Serializable;
 import java.util.List;
 
 @EBean

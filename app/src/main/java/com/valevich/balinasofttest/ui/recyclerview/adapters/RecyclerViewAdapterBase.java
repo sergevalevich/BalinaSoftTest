@@ -25,10 +25,6 @@ public abstract class RecyclerViewAdapterBase<T, V extends View & ViewBinder<T>>
         return new ViewWrapper<>(onCreateItemView(parent, viewType));
     }
 
-    public T getItem(int position) {
-        return mItems.get(position);
-    }
-
     protected abstract V onCreateItemView(ViewGroup parent, int viewType);
 
 }

@@ -7,8 +7,6 @@ public class TriesCounter {
 
     private static final int DEFAULT_TRIES_COUNT = 3;
 
-    private int mTriesCount = DEFAULT_TRIES_COUNT;
-
     private int mTriesLeft = DEFAULT_TRIES_COUNT;
 
     public boolean areTriesLeft() {
@@ -17,15 +15,6 @@ public class TriesCounter {
 
     public void reduceTry() {
         mTriesLeft--;
-    }
-
-    public void resetTries() {
-        mTriesLeft = mTriesCount;
-    }
-
-    public void setTriesCount(int triesCount) {
-        mTriesCount = triesCount;
-        mTriesLeft = triesCount;
     }
 
 }

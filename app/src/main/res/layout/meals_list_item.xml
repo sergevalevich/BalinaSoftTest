@@ -1,102 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:id="@+id/dishCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dishCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/card_side_margin"
     android:layout_marginEnd="@dimen/card_side_margin"
+    app:cardBackgroundColor="@color/card"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation"
-    app:cardUseCompatPadding="true"
-    android:animateLayoutChanges="true">
+    app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:contentDescription="@string/dish_picture_desc"
-            android:id="@+id/picture"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/card_media_height"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_top_padding"
+        android:layout_marginBottom="@dimen/card_bottom_padding"
+        android:layout_marginLeft="@dimen/card_content_side_margin"
+        android:layout_marginStart="@dimen/card_content_side_margin"
+        android:layout_marginEnd="@dimen/card_content_side_margin"
+        android:layout_marginRight="@dimen/card_content_side_margin">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/dish_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/card_text_side_margin"
-            android:layout_marginLeft="@dimen/card_text_side_margin"
-            android:layout_marginEnd="@dimen/card_text_side_margin"
-            android:layout_marginRight="@dimen/card_text_side_margin">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/card_info_top_margin"
+            android:layout_marginEnd="@dimen/text_media_gap"
+            android:layout_marginRight="@dimen/text_media_gap"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/picture"
+            android:layout_toStartOf="@+id/picture">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="40"
+                android:maxLines="3"
+                android:textStyle="italic"
+                android:textSize="@dimen/primary_textSize"
+                android:textColor="@color/colorText"/>
 
             <LinearLayout
-                android:id="@+id/dish_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_title_top_margin"
-                    android:layout_marginBottom="@dimen/card_title_bottom_margin"
-                    android:maxLines="1"
-                    android:maxLength="25"
-                    android:textSize="@dimen/dish_name_textSize"
-                    tools:text = "Пицца"/>
-                <TextView
                     android:id="@+id/weight"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:maxLength="25"
-                    android:textSize="@dimen/secondary_textSize"
+                    android:layout_weight="1"
                     android:alpha=".7"
-                    tools:text = "100 г."/>
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/secondary_textSize"
+                    android:textColor="@color/colorText"/>
 
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_info_bottom_margin"
-                    android:maxLines="1"
-                    android:maxLength="25"
-                    android:textSize="@dimen/secondary_textSize"
+                    android:layout_weight="6"
                     android:alpha=".7"
-                    tools:text = "150 р."/>
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:textSize="@dimen/secondary_textSize"
+                    android:textColor="@color/colorText"/>
 
             </LinearLayout>
 
-            <ImageView
-                android:contentDescription="@string/dropdown_arrow_desc"
-                android:id="@+id/arrow"
-                android:layout_width="@dimen/dropdown_arrow_size"
-                android:layout_height="@dimen/dropdown_arrow_size"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_arrow"/>
-
-
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/expandableView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </ScrollView>
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="@dimen/card_media_width"
+            android:layout_height="@dimen/card_media_height"
+            android:contentDescription="@string/dish_picture_desc"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitEnd"/>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

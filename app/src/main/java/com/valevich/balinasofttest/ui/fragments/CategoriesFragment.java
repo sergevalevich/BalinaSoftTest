@@ -7,13 +7,14 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.CategoriesAdapter;
-import com.valevich.balinasofttest.utils.ConstantsManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -23,8 +24,13 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.fragment_categories)
 public class CategoriesFragment extends Fragment {
 
+    private static final int CATEGORIES_LOADER_ID = 0;
+
     @ViewById(R.id.categories_list)
     RecyclerView mCategoriesRecyclerView;
+
+    @ViewById(R.id.empty_view)
+    TextView mEmptyView;
 
     @Bean
     CategoriesAdapter mCategoriesAdapter;
@@ -65,7 +71,7 @@ public class CategoriesFragment extends Fragment {
     }
 
     private void loadCategories() {
-        getLoaderManager().restartLoader(ConstantsManager.CATEGORIES_LOADER_ID,
+        getLoaderManager().restartLoader(CATEGORIES_LOADER_ID,
                 null,
                 new LoaderManager.LoaderCallbacks() {
                     @Override
@@ -84,6 +90,7 @@ public class CategoriesFragment extends Fragment {
                     @Override
                     public void onLoadFinished(Loader loader, Object data) {
                         mCategoriesRecyclerView.setAdapter(mCategoriesAdapter);
+                        showListIfNotEmpty();
                     }
 
                     @Override
@@ -91,5 +98,15 @@ public class CategoriesFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void showListIfNotEmpty() {
+        if (mCategoriesAdapter.getItemCount() == 0) {
+            mCategoriesRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mCategoriesRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 }

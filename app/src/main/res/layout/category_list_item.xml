@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -9,7 +8,7 @@
               android:paddingLeft="@dimen/category_item_side_padding"
               android:paddingEnd="@dimen/category_item_side_padding"
               android:paddingRight="@dimen/category_item_side_padding"
-              tools:background="@color/colorAccent">
+              android:background="@color/list_item">
 
     <ImageView
         android:contentDescription="@string/category_icon_desc"
@@ -25,6 +24,8 @@
         android:layout_marginStart="@dimen/category_name_left_margin"
         android:textSize="@dimen/primary_textSize"
         android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
         android:maxLines="1"
         android:maxLength="40"/>
 

@@ -29,12 +29,15 @@ public class CategoryItemView extends LinearLayout implements ViewBinder<Categor
 
     public CategoryItemView(Context context) {
         super(context);
+        setLayoutParams(new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     public void bindData(Category item) {
         mCategoryNameLabel.setText(item.getName());
-        mImageLoader.loadRoundedImage(item.getIconResourceId(),mCategoryIcon);
+        mImageLoader.loadRoundedImageByResId(item.getIconResourceId(),mCategoryIcon);
     }
 
 }

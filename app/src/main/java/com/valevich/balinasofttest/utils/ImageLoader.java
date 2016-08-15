@@ -20,7 +20,7 @@ public class ImageLoader {
     @RootContext
     Context mContext;
 
-    public void loadRoundedImage(int resId, final ImageView imageView) {
+    public void loadRoundedImageByResId(int resId, final ImageView imageView) {
         Glide.with(mContext)
                 .load(resId)
                 .asBitmap()

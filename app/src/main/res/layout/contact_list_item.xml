@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/two_line_item_height"
               android:paddingEnd="@dimen/list_item_side_padding"
-              android:paddingStart="@dimen/list_item_side_padding">
+              android:paddingStart="@dimen/list_item_side_padding"
+              android:background="@color/list_item">
 
     <ImageView
         android:contentDescription="@string/contact_icon_desc"
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="@dimen/primary_textSize"/>
+            android:textSize="@dimen/primary_textSize"
+            android:textColor="@color/colorText"/>
 
         <TextView
             android:id="@+id/phone_number"
@@ -37,7 +39,7 @@
             android:singleLine="true"
             android:alpha=".7"
             android:textSize="@dimen/secondary_textSize"
-            android:text = "Минск, Партизанский проспект 71"/>
+            android:textColor="@color/colorText"/>
 
 
     </LinearLayout>

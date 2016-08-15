@@ -8,6 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.annotation.UniqueGroup;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 import com.raizlabs.android.dbflow.structure.container.ModelContainerAdapter;
@@ -111,6 +112,13 @@ public class Meal extends BaseModel {
         ModelContainerAdapter<Category> adapter = FlowManager
                 .getContainerAdapter(Category.class);
         this.category = adapter.toForeignKeyContainer(category);
+    }
+
+    public static Meal get(int id) {
+        return SQLite.select()
+                .from(Meal.class)
+                .where(Meal_Table.id.eq(id))
+                .querySingle();
     }
 
 }

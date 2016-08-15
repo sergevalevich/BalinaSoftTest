@@ -15,4 +15,14 @@
     <string name="network_unavailable_message">Сеть недоступна</string>
     <string name="info_unavailable_message">Информация недоступна</string>
     <string name="contact_icon_desc">contact icon</string>
+    <string name="no_data_available_message">Нет данных</string>
+    <string name="description_unavailable_message">Описание отсутствует</string>
+    <string name="api_key">ukAXxeJYZN</string>
+    <string name="weight_param_name">Вес</string>
+    <string name="decimal_format">#0</string>
+    <string name="description_field_title">Описание</string>
+    <string name="weight_field_title">Вес</string>
+    <string name="price_field_title">Цена</string>
+    <string name="price_default_metrics">-.</string>
+    <string name="loading_message">Загрузка...</string>
 </resources>

@@ -19,8 +19,52 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        release {
+            def Properties dProps = new Properties()
+            def dpFile = file('release_signing.properties')
+            if (dpFile.canRead()){
+                dProps.load(new FileInputStream(dpFile))
+
+                if (dProps!=null && dProps.containsKey('STORE_FILE') && dProps.containsKey('STORE_PASSWORD') &&
+                        dProps.containsKey('KEY_ALIAS') && dProps.containsKey('KEY_PASSWORD')) {
+                    storeFile = file(dProps['STORE_FILE'])
+                    storePassword = dProps['STORE_PASSWORD']
+                    keyAlias = dProps['KEY_ALIAS']
+                    keyPassword = dProps['KEY_PASSWORD']
+                } else {
+                    throw new GradleException("release_signing.properties found but some entries are missing")
+                }
+            } else {
+                throw new GradleException("release_signing.properties not found")
+            }
+        }
+        debug {
+            def Properties dProps = new Properties()
+            def dpFile = file('debug_signing.properties')
+            if (dpFile.canRead()){
+                dProps.load(new FileInputStream(dpFile))
+
+                if (dProps!=null && dProps.containsKey('STORE_FILE') && dProps.containsKey('STORE_PASSWORD') &&
+                        dProps.containsKey('KEY_ALIAS') && dProps.containsKey('KEY_PASSWORD')) {
+                    storeFile = file(dProps['STORE_FILE'])
+                    storePassword = dProps['STORE_PASSWORD']
+                    keyAlias = dProps['KEY_ALIAS']
+                    keyPassword = dProps['KEY_PASSWORD']
+                } else {
+                    throw new GradleException("debug_signing.properties found but some entries are missing")
+                }
+            } else {
+                throw new GradleException("debug_signing.properties not found")
+            }
         }
     }
 }

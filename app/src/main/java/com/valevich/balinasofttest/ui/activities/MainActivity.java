@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
@@ -27,6 +28,7 @@ import com.valevich.balinasofttest.network.sync.SyncAdapter;
 import com.valevich.balinasofttest.ui.fragments.CategoriesFragment_;
 import com.valevich.balinasofttest.ui.fragments.ContactsFragment_;
 import com.valevich.balinasofttest.ui.fragments.MealsFragment_;
+import com.valevich.balinasofttest.utils.NetworkStateChecker;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -63,11 +65,17 @@ public class MainActivity extends AppCompatActivity
     @StringRes(R.string.loading_message)
     String mLoadingMessage;
 
+    @StringRes(R.string.network_unavailable_message)
+    String mNetworkUnavailableMessage;
+
     @InstanceState
     String mToolbarTitle;
 
     @Bean
     EventBus mEventBus;
+
+    @Bean
+    NetworkStateChecker mNetworkStateChecker;
 
     @Bean
     SyncAdapter mSyncAdapter;
@@ -115,13 +123,13 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void onFetchStarted(FetchStartedEvent event) {
-        notifyUser(mLoadingMessage);
+        notifyUser(mLoadingMessage,false);
     }
 
     @Subscribe
     public void onError(ErrorEvent event) {
         stopRefreshing();
-        notifyUser(event.getMessage());
+        notifyUser(event.getMessage(),true);
     }
 
     @Subscribe
@@ -173,7 +181,12 @@ public class MainActivity extends AppCompatActivity
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSyncAdapter.syncImmediately();
+                if (mNetworkStateChecker.isNetworkAvailable())
+                    mSyncAdapter.syncImmediately();
+                else {
+                    notifyUser(mNetworkUnavailableMessage,true);
+                    stopRefreshing();
+                }
             }
         });
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
@@ -253,9 +266,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void notifyUser(String message) {
-        Snackbar.make(mDrawerLayout, message, Snackbar.LENGTH_SHORT)
-                .show();
+    private void notifyUser(String message, boolean withSnackBar) {
+        if(withSnackBar)
+            Snackbar.make(mDrawerLayout, message, Snackbar.LENGTH_LONG)
+                    .show();
+
+        else Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     }
 
 }

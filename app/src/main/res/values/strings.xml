@@ -24,7 +24,7 @@
     <string name="weight_field_title">Вес</string>
     <string name="price_field_title">Цена</string>
     <string name="price_default_metrics">-.</string>
-    <string name="loading_message">Загрузка…</string>
+    <string name="loading_message">Обновление каталога…</string>
     <string name="sync_account_type">balinasofttest.valevich.com</string>
     <string name="content_authority">com.valevich.balinasofttest</string>
 </resources>

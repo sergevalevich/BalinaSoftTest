@@ -10,29 +10,36 @@
     <dimen name="category_name_left_margin">16dp</dimen>
 
     <!-- Card's and lists margins, per the Android Design guidelines. -->
-    <dimen name="card_media_height">240dp</dimen>
+    <dimen name="card_media_height">64dp</dimen>
+    <dimen name="card_media_width">96dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_side_margin">4dp</dimen>
-    <dimen name="card_title_top_margin">24dp</dimen>
-    <dimen name="card_text_side_margin">16dp</dimen>
-    <dimen name="card_title_bottom_margin">16dp</dimen>
-    <dimen name="dish_name_textSize">24sp</dimen>
+    <dimen name="card_info_top_margin">8dp</dimen>
+    <dimen name="card_content_side_margin">16dp</dimen>
+    <dimen name="card_top_padding">16dp</dimen>
+    <dimen name="card_bottom_padding">16dp</dimen>
     <dimen name="secondary_textSize">14sp</dimen>
     <dimen name="primary_textSize">16sp</dimen>
-    <dimen name="card_info_bottom_margin">16dp</dimen>
     <dimen name="list_vertical_padding">3dp</dimen>
-    <dimen name="dropdown_arrow_size">36dp</dimen>
-    <dimen name="two_line_item_height">72dp</dimen>
     <dimen name="list_item_side_padding">16dp</dimen>
     <dimen name="contact_icon_size">48dp</dimen>
+    <dimen name="two_line_item_height">72dp</dimen>
+    <dimen name="text_media_gap">8dp</dimen>
 
     <!-- Navigation Drawer margins, per the Android Design guidelines. -->
     <dimen name="drawer_header_layout_height">172dp</dimen>
     <dimen name="drawer_status_bar_height">25dp</dimen>
 
-
     <dimen name="map_height">240dp</dimen>
     <dimen name="map_height_land">180dp</dimen>
+    <dimen name="price_background_width">56dp</dimen>
+    <dimen name="price_background_height">56dp</dimen>
+    <dimen name="expanded_title_margin_start">48dp</dimen>
+    <dimen name="expanded_title_margin_end">64dp</dimen>
+    <dimen name="collapsing_image_height">240dp</dimen>
+    <dimen name="meal_description_padding">16dp</dimen>
+    <dimen name="primary_textSize_large">24sp</dimen>
+    <dimen name="attributes_area_height">56dp</dimen>
 
 </resources>

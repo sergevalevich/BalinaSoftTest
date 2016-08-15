@@ -7,13 +7,17 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
+import com.valevich.balinasofttest.eventbus.events.MealSelectedEvent;
+import com.valevich.balinasofttest.storage.data.Meal;
+import com.valevich.balinasofttest.ui.activities.DetailsActivity_;
 import com.valevich.balinasofttest.ui.recyclerview.adapters.MealsAdapter;
-import com.valevich.balinasofttest.utils.ConstantsManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -24,8 +28,13 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.fragment_meals)
 public class MealsFragment extends Fragment {
 
+    private static final int MEALS_LOADER_ID = 1;
+
     @ViewById(R.id.meals_list)
     RecyclerView mMealsRecyclerView;
+
+    @ViewById(R.id.empty_view)
+    TextView mEmptyView;
 
     @FragmentArg
     String mCategoryName;
@@ -64,13 +73,26 @@ public class MealsFragment extends Fragment {
         loadMeals();
     }
 
+    @Subscribe
+    public void onMealSelected(MealSelectedEvent event) {
+        Meal meal = event.getMeal();
+        if (meal != null)
+            DetailsActivity_.intent(getContext())
+                    .name(meal.getName())
+                    .description(meal.getDescription())
+                    .price(meal.getPrice())
+                    .weight(meal.getWeight())
+                    .imageUrl(meal.getImageUrl())
+                    .start();
+    }
+
     private void setupRecyclerView() {
         mMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void loadMeals() {
 
-        getLoaderManager().restartLoader(ConstantsManager.MEALS_LOADER_ID,
+        getLoaderManager().restartLoader(MEALS_LOADER_ID,
                 null,
                 new LoaderManager.LoaderCallbacks() {
                     @Override
@@ -89,6 +111,7 @@ public class MealsFragment extends Fragment {
                     @Override
                     public void onLoadFinished(Loader loader, Object data) {
                         mMealsRecyclerView.setAdapter(mMealsAdapter);
+                        showListIfNotEmpty();
                     }
 
                     @Override
@@ -96,6 +119,16 @@ public class MealsFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void showListIfNotEmpty() {
+        if (mMealsAdapter.getItemCount() == 0) {
+            mMealsRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mMealsRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/attributes_area_height"
+        android:paddingTop="@dimen/meal_description_padding"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:textStyle="italic"
+                android:text="@string/price_field_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/primary_textSize"
+                android:gravity="center"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:maxLength="15"
+                android:gravity="center"
+                android:textSize="@dimen/secondary_textSize"
+                android:textStyle="bold"
+                android:alpha=".7"
+                android:textColor="@color/colorText"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:textStyle="italic"
+                android:text="@string/weight_field_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/primary_textSize"
+                android:gravity="center"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:maxLength="15"
+                android:textSize="@dimen/secondary_textSize"
+                android:textStyle="bold"
+                android:alpha=".7"
+                android:textColor="@color/colorText"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/meal_description_padding"
+        android:textSize="@dimen/primary_textSize_large"
+        android:textColor="@color/colorText"/>
+
+    <TextView
+        android:textStyle="italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/description_field_title"
+        android:textSize="@dimen/primary_textSize"
+        android:paddingLeft="@dimen/meal_description_padding"
+        android:paddingStart="@dimen/meal_description_padding"
+        android:paddingRight="@dimen/meal_description_padding"
+        android:paddingEnd="@dimen/meal_description_padding"
+        android:textColor="@color/colorText"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/meal_description_padding"
+        android:paddingStart="@dimen/meal_description_padding"
+        android:paddingRight="@dimen/meal_description_padding"
+        android:paddingEnd="@dimen/meal_description_padding"
+        android:paddingBottom="@dimen/meal_description_padding"
+        android:textSize="@dimen/secondary_textSize"
+        android:alpha=".7"
+        android:textColor="@color/colorText"/>
+
+</LinearLayout>

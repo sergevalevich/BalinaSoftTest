@@ -31,6 +31,19 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.activities.DetailsActivity">
+        </activity>
+
+        <activity
+            android:name=".ui.activities.DetailsActivity_"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.activities.MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.valevich.balinasofttest.ui.activities.MainActivity"/>
+        </activity>
+
         <service
             android:name=".services.CatalogLoadingService_"
             android:exported="false">

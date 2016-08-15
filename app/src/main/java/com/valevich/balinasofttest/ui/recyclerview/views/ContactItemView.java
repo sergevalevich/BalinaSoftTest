@@ -27,6 +27,9 @@ public class ContactItemView extends LinearLayout implements ViewBinder<Map.Entr
 
     public ContactItemView(Context context) {
         super(context);
+        setLayoutParams(new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
     }
 
     @Override

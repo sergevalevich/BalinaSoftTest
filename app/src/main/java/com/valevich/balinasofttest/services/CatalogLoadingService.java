@@ -8,6 +8,7 @@ import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
 import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.eventbus.events.ErrorEvent;
+import com.valevich.balinasofttest.eventbus.events.FetchStartedEvent;
 import com.valevich.balinasofttest.network.RestService;
 import com.valevich.balinasofttest.network.model.CategoryApiModel;
 import com.valevich.balinasofttest.network.model.FetchedCatalogModel;
@@ -15,7 +16,6 @@ import com.valevich.balinasofttest.network.model.MealApiModel;
 import com.valevich.balinasofttest.network.model.ShopApiModel;
 import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.storage.data.Meal;
-import com.valevich.balinasofttest.utils.ConstantsManager;
 import com.valevich.balinasofttest.utils.NetworkStateChecker;
 import com.valevich.balinasofttest.utils.TriesCounter;
 
@@ -49,8 +49,14 @@ public class CatalogLoadingService extends IntentService implements
     @Bean
     NetworkStateChecker mNetworkStateChecker;
 
+    @StringRes(R.string.api_key)
+    String mApiKey;
+
     @StringRes(R.string.network_unavailable_message)
     String mNetworkUnavailableMessage;
+
+    @StringRes(R.string.weight_param_name)
+    String mWeightParamName;
 
     public CatalogLoadingService() {
         super(CatalogLoadingService.class.getSimpleName());
@@ -88,9 +94,10 @@ public class CatalogLoadingService extends IntentService implements
     }
 
     private void fetchCatalog() {
-        if (mNetworkStateChecker.isNetworkAvailable())
-            mRestService.fetchCatalog(ConstantsManager.API_KEY, this);
-        else {
+        if (mNetworkStateChecker.isNetworkAvailable()) {
+            notifyFetchStarted();
+            mRestService.fetchCatalog(mApiKey, this);
+        } else {
             notifyAboutError(mNetworkUnavailableMessage);
         }
     }
@@ -153,7 +160,7 @@ public class CatalogLoadingService extends IntentService implements
         mealToSave.setName(fetchedMeal.getName());
         mealToSave.setPrice(fetchedMeal.getPrice());
         mealToSave.setDescription(fetchedMeal.getDescription());
-        mealToSave.setWeight(fetchedMeal.getParam(ConstantsManager.MEAL_PARAMETER_WEIGHT_NAME));
+        mealToSave.setWeight(fetchedMeal.getParam(mWeightParamName));
         mealToSave.setImageUrl(fetchedMeal.getPictureUrl());
         return mealToSave;
     }
@@ -174,6 +181,10 @@ public class CatalogLoadingService extends IntentService implements
 
     private void notifyAboutError(String message) {
         mEventBus.post(new ErrorEvent(message));
+    }
+
+    private void notifyFetchStarted() {
+        mEventBus.post(new FetchStartedEvent());
     }
 
     @Override

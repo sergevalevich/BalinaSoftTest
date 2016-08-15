@@ -3,17 +3,16 @@ package com.valevich.balinasofttest.ui.recyclerview.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
-import com.valevich.balinasofttest.R;
+import com.valevich.balinasofttest.eventbus.EventBus;
+import com.valevich.balinasofttest.eventbus.events.MealSelectedEvent;
 import com.valevich.balinasofttest.storage.data.Category;
 import com.valevich.balinasofttest.storage.data.Meal;
 import com.valevich.balinasofttest.ui.recyclerview.ViewWrapper;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView;
 import com.valevich.balinasofttest.ui.recyclerview.views.MealsItemView_;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -24,7 +23,8 @@ public class MealsAdapter
     @RootContext
     Context mContext;
 
-    private int mExpandedItemPosition = -1;
+    @Bean
+    EventBus mEventBus;
 
     public void initAdapter(String categoryName) {
         Category category = Category.get(categoryName);
@@ -38,7 +38,7 @@ public class MealsAdapter
         Meal meal = mItems.get(position);
         itemView.bindData(meal);
 
-        setUpExpandableArea(itemView,position);
+        setItemClickNotification(itemView,meal);
 
     }
 
@@ -47,47 +47,17 @@ public class MealsAdapter
         return MealsItemView_.build(mContext);
     }
 
-    private void setUpExpandableArea(MealsItemView view, final int position) {
-        final boolean isExpanded = position == mExpandedItemPosition;
-        view.getExpandableView().setVisibility(isExpanded?View.VISIBLE:View.GONE);
-
-        final ImageView arrow = view.getDropDownArrow();
-        arrow.setRotation(isExpanded ? 180 : 0);
-        arrow.setOnClickListener(new View.OnClickListener() {
+    private void setItemClickNotification(MealsItemView view, final Meal meal){
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                setExpandedItemPosition(position,isExpanded);
-                arrow.startAnimation(getArrowAnimation());
+            public void onClick(View view) {
+                notifyMealSelected(meal);
             }
         });
     }
 
-    private void setExpandedItemPosition(int position, boolean isExpanded) {
-        mExpandedItemPosition = isExpanded ? -1 : position;
-    }
-
-    private Animation getArrowAnimation() {
-
-        Animation arrowAnimation = AnimationUtils.loadAnimation(mContext, R.anim.rotate);
-
-        arrowAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        return arrowAnimation;
+    private void notifyMealSelected(Meal meal) {
+        mEventBus.post(new MealSelectedEvent(meal));
     }
 
 }

@@ -6,8 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +19,10 @@ import android.view.MenuItem;
 import com.squareup.otto.Subscribe;
 import com.valevich.balinasofttest.R;
 import com.valevich.balinasofttest.eventbus.EventBus;
+import com.valevich.balinasofttest.eventbus.events.CatalogSavedEvent;
 import com.valevich.balinasofttest.eventbus.events.CategorySelectedEvent;
 import com.valevich.balinasofttest.eventbus.events.ErrorEvent;
+import com.valevich.balinasofttest.eventbus.events.FetchStartedEvent;
 import com.valevich.balinasofttest.services.CatalogLoadingService_;
 import com.valevich.balinasofttest.ui.fragments.CategoriesFragment_;
 import com.valevich.balinasofttest.ui.fragments.ContactsFragment_;
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity
     @ViewById(R.id.navigation_view)
     NavigationView mNavigationView;
 
+    @ViewById(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @StringRes(R.string.nav_drawer_categories)
     String mCategoriesTitle;
 
@@ -52,6 +59,9 @@ public class MainActivity extends AppCompatActivity
 
     @StringRes(R.string.meals)
     String mMealsTitle;
+
+    @StringRes(R.string.loading_message)
+    String mLoadingMessage;
 
     @InstanceState
     String mToolbarTitle;
@@ -86,6 +96,12 @@ public class MainActivity extends AppCompatActivity
         mEventBus.unregister(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopRefreshing();
+    }
+
     @Subscribe
     public void onCategorySelected(CategorySelectedEvent event) {
         replaceFragment(MealsFragment_
@@ -95,13 +111,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Subscribe
+    public void onFetchStarted(FetchStartedEvent event) {
+        notifyUser(mLoadingMessage);
+    }
+
+    @Subscribe
     public void onError(ErrorEvent event) {
+        stopRefreshing();
         notifyUser(event.getMessage());
+    }
+
+    @Subscribe
+    public void onCatalogSaved(CatalogSavedEvent event) {
+        stopRefreshing();
     }
 
     @AfterViews
     void setupViews() {
         setupActionBar();
+        setUpSwipeToRefresh();
         setupDrawerLayout();
         setupFragmentManager();
     }
@@ -136,6 +164,21 @@ public class MainActivity extends AppCompatActivity
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void setUpSwipeToRefresh() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startCatalogLoadingService();
+            }
+        });
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
+    }
+
+    private void stopRefreshing() {
+        if(mSwipeRefreshLayout!=null && mSwipeRefreshLayout.isRefreshing())
+            mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void setupDrawerLayout() {
@@ -214,7 +257,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void notifyUser(String message) {
-        Snackbar.make(mDrawerLayout, message, Snackbar.LENGTH_LONG)
+        Snackbar.make(mDrawerLayout, message, Snackbar.LENGTH_SHORT)
                 .show();
     }
 

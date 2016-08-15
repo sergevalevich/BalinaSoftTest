@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
+    android:background="@color/colorBackground"
     tools:context=".ui.activities.MainActivity">
 
     <include layout="@layout/content_main"/>
@@ -16,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity = "start"
+        android:background="@color/colorBackground"
         app:headerLayout = "@layout/drawer_header"
         app:menu = "@menu/drawer_menu"
         app:itemIconTint="@color/drawer_item"
